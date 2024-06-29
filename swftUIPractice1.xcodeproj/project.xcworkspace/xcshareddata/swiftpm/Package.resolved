@@ -1,0 +1,51 @@
+{
+  "originHash" : "7b44503bc871fe11fd01d6e06fea481e0513790bf62128b1a432d590a9567b94",
+  "pins" : [
+    {
+      "identity" : "sdwebimage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImage.git",
+      "state" : {
+        "revision" : "b8523c1642f3c142b06dd98443ea7c48343a4dfd",
+        "version" : "5.19.3"
+      }
+    },
+    {
+      "identity" : "sdwebimageswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SDWebImage/SDWebImageSwiftUI.git",
+      "state" : {
+        "revision" : "b7af5e6bd9c2987e41730400d1baad13d74a141a",
+        "version" : "3.0.4"
+      }
+    },
+    {
+      "identity" : "swiftfulrecursiveui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftfulThinking/SwiftfulRecursiveUI.git",
+      "state" : {
+        "revision" : "3d2d5ac6efe70874fb5ffb2f8e1d5ccd457f4366",
+        "version" : "1.0.2"
+      }
+    },
+    {
+      "identity" : "swiftfulrouting",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftfulThinking/SwiftfulRouting.git",
+      "state" : {
+        "revision" : "02a6e295fbcbee2f30d49b90bd5e2b11a9885d39",
+        "version" : "5.3.5"
+      }
+    },
+    {
+      "identity" : "swiftfului",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SwiftfulThinking/SwiftfulUI.git",
+      "state" : {
+        "revision" : "7e6e2d1c29d05e1519f2f5a2ce6012fe4e4dfa19",
+        "version" : "1.2.0"
+      }
+    }
+  ],
+  "version" : 3
+}

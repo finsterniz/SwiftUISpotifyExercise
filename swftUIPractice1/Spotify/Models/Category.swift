@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+enum Category: String, CaseIterable{ // 让其遵循String才有rawValue
+    case all, music, podcasts, audiobooks
+}

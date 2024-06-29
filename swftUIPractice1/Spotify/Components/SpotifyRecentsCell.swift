@@ -8,11 +8,38 @@
 import SwiftUI
 
 struct SpotifyRecentsCell: View {
+    var imageName : String = Constants.randomImage
+    var title: String = "some image title"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack{
+            ImageLoaderView(urlString: imageName)
+                .frame(width: 55, height: 55, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+            
+            Text(title)
+                .fontWeight(.semibold)
+                .font(.callout)
+                .lineLimit(2)
+                .themeColor(isSelected: false)
+                .padding(.trailing, 6)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
 #Preview {
-    SpotifyRecentsCell()
+    ZStack{
+        Color.spotifyBlack.ignoresSafeArea()
+        
+        VStack{
+            HStack{
+                SpotifyRecentsCell()
+                SpotifyRecentsCell()
+            }
+            HStack{
+                SpotifyRecentsCell()
+                SpotifyRecentsCell()
+            }
+        }
+    }
 }
