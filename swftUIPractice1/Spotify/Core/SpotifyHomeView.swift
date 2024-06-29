@@ -14,6 +14,7 @@ struct SpotifyHomeView: View {
     @State private var products: [Product] = []
     @State private var showListSheet: Bool = false
     @State private var showPlaySheet: Bool = false
+    @State private var productRows: [ProductRow] = []
     
     var body: some View {
         ZStack{
@@ -33,12 +34,7 @@ struct SpotifyHomeView: View {
                         }
                         .padding(.horizontal, 10)
                         
-                        ForEach(1..<20){_ in
-                            Rectangle()
-                                .foregroundColor(.red)
-                                .frame(width: 200, height: 200)
-                                
-                        }
+                        listRows
                     } header: {
                         header
                     }
@@ -69,6 +65,12 @@ struct SpotifyHomeView: View {
         do{
             currentUser = try await DatabaseHelper().getUsers().first
             products = try await Array(DatabaseHelper().getProducts().prefix(8))
+            var rows: [ProductRow] = []
+            let brands = Set(products.map { $0.brand })
+            for brand in brands{
+                rows.append(ProductRow(title: brand?.capitalized ?? "", products: products))
+            }
+            productRows = rows
         }catch{
             print("Error getting Users or products \(error)")
         }
@@ -77,7 +79,13 @@ struct SpotifyHomeView: View {
     private var recentsSection: some View{
         NonLazyVGrid(columns: 2, alignment: .leading, spacing: 8, items: products) { product in
             if let productImage = product?.firstImage, let title = product?.title{
-                SpotifyRecentsCell(imageName: productImage, title: title)
+                SpotifyRecentsCell(
+                    imageName: productImage,
+                    title: title
+                )
+                .asButton(.press) {
+                    
+                }
         }
         }
     }
@@ -92,6 +100,30 @@ struct SpotifyHomeView: View {
             onAddToPlaylistPressed: {self.showListSheet = true},
             onPlayPressed: {self.showPlaySheet = true}
             )
+    }
+    
+    private var listRows: some View{
+        ForEach(productRows) { productRow in
+            VStack{
+                Text(productRow.title)
+                    .foregroundColor(.spotifyWhite)
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                
+                ScrollView(.horizontal){
+                    HStack(alignment: .top){
+                        ForEach(productRow.products){product in
+                            ImageTitleRowCell( imageName: product.firstImage, title: product.title)
+                                .asButton(.press) {
+                                    
+                                }
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 9)
     }
     
     private var header: some View{
