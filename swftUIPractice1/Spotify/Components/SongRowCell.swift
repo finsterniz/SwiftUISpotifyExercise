@@ -35,7 +35,7 @@ struct SongRowCell: View {
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(.blue)
+//            .background(.blue)
 //            .background(.spotifyBlack.opacity(0.001))
             .asButton(.press) {
                 onCellPressed?()

@@ -34,25 +34,30 @@ struct SpotifyPlaylistView: View {
                     )
                     .padding(.horizontal, 16)
                     
-                    List{
-                        ForEach(products) { product in
-                            SongRowCell(
-                                songName: product.title,
-                                artist: product.brand ?? "",
-                                imageSize: 50,
-                                onCellPressed: nil,
-                                onEllipsisPressed: nil
-                            )
-                        }
+                    ForEach(products) { product in
+                        SongRowCell(
+                            imageName: product.firstImage,
+                            songName: product.title,
+                            artist: product.brand ?? "",
+                            imageSize: 50,
+                            onCellPressed: nil,
+                            onEllipsisPressed: nil
+                        )
                     }
+                    .padding(.leading, 10)
                 }
             }
         }
+        .task{
+            await self.loadData()
+        }
+        .toolbar(.hidden, for: .navigationBar)
     }
     
     private func loadData() async {
         do{
-            products = try await DatabaseHelper().getProducts()
+            self.products = try await DatabaseHelper().getProducts()
+            print("load products: \(products.count)")
         }catch{
             print("Error getting Users or products \(error)")
         }
