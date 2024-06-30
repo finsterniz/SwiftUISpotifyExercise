@@ -75,6 +75,7 @@ struct SpotifyNewReleaseCell: View {
                 }
                 .font(.callout)
             }
+            .background(.spotifyBlack.opacity(0.001))
             .onTapGesture {
                 onPlayPressed?()
             }

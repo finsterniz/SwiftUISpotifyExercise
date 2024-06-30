@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftfulUI
-import SwiftfulRouting
 
 struct SpotifyPlaylistView: View {
     
@@ -15,10 +14,9 @@ struct SpotifyPlaylistView: View {
     var user: User = .mock
     @State var products: [Product] = []
     @State var showHeader: Bool = true
-    @Environment (\.router) var router
-
 //    @State var offset: CGFloat = 0
 //    @State var showTitle: Bool = false
+    @Environment (\.router) var router
     
     var body: some View {
         ZStack(){
@@ -50,14 +48,9 @@ struct SpotifyPlaylistView: View {
                             songName: product.title,
                             artist: product.brand ?? "",
                             imageSize: 50,
-                            onCellPressed: {
-                                goToPlaylistView(product: product)
-                            },
+                            onCellPressed: nil,
                             onEllipsisPressed: nil
                         )
-                        .asButton {
-                            
-                        }
                     }
                     .padding(.leading, 10)
                 }
@@ -66,8 +59,29 @@ struct SpotifyPlaylistView: View {
 //            Text("current maxY: \(offset)")
 //                .background(.red)
             
-            header
-                .frame(maxHeight: .infinity, alignment: .top)
+            ZStack{
+                Text(product.title)
+                    .padding(.vertical, 16)
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .background(showHeader ? .spotifyBlack : .clear)
+                    .offset(y: showHeader ? 0 : -50)
+                    .opacity(showHeader ? 1.0 : 0)
+                
+                Image(systemName: "chevron.left")
+                    .font(.title3)
+                    .padding(10)
+                    .background(showHeader ? .spotifyGray.opacity(0.001) : .spotifyGray.opacity(0.7))
+                    .clipShape(Circle())
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading, 16)
+                    .asButton {
+                        router.dismissScreen()
+                    }
+            }
+            .foregroundColor(.spotifyWhite)
+            .frame(maxHeight: .infinity, alignment: .top)
+            .animation(.smooth(duration: 0.4), value: showHeader)
         }
         .task{
             await self.loadData()
@@ -82,41 +96,8 @@ struct SpotifyPlaylistView: View {
             print("Error getting Users or products \(error)")
         }
     }
-    
-    private var header: some View{
-        ZStack{
-            Text(product.title)
-                .padding(.vertical, 16)
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .background(showHeader ? .spotifyBlack : .clear)
-                .offset(y: showHeader ? 0 : -50)
-                .opacity(showHeader ? 1.0 : 0)
-            
-            Image(systemName: "chevron.left")
-                .font(.title3)
-                .padding(10)
-                .background(showHeader ? .spotifyGray.opacity(0.001) : .spotifyGray.opacity(0.7))
-                .clipShape(Circle())
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.leading, 16)
-                .asButton {
-                    router.dismissScreen()
-                }
-        }
-        .foregroundColor(.spotifyWhite)
-        .animation(.smooth(duration: 0.4), value: showHeader)
-    }
-    
-    private func goToPlaylistView(product: Product){
-        router.showScreen(.push){_ in
-            SpotifyPlaylistView(product: product, user: user)
-        }
-    }
 }
 
 #Preview {
-    RouterView{_ in
-        SpotifyPlaylistView()
-    }
+    SpotifyPlaylistView()
 }

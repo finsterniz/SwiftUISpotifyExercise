@@ -7,14 +7,17 @@
 
 import SwiftUI
 import SwiftfulUI
+import SwiftfulRouting
 
 struct SpotifyHomeView: View {
     @State private var currentUser: User? = nil
     @State private var selectedCategory: Category? = nil
     @State private var products: [Product] = []
-    @State private var showListSheet: Bool = false
+//    @State private var showListSheet: Bool = false
     @State private var showPlaySheet: Bool = false
     @State private var productRows: [ProductRow] = []
+    @Environment (\.router) var router
+
     
     var body: some View {
         ZStack{
@@ -42,27 +45,20 @@ struct SpotifyHomeView: View {
             }
             .padding(.top, 8)
             .clipped()
-            .sheet(isPresented: $showListSheet, content: {
-                Text("ListSheet")
-                Button("dismiss"){
-                    self.showListSheet = false
-                }            })
-            .sheet(isPresented: $showPlaySheet, content: {
-                Text("PlaySheet")
-                Button("dismiss"){
-                    self.showPlaySheet = false
-                }
-            })
         }
         .task {
-            await loadData()
+            await getData()
         }
         .toolbar(.hidden, for: .navigationBar)
             
     }
     
-    private func loadData() async {
+    private func getData() async {
         do{
+            guard products.isEmpty else{
+                return
+            }
+            
             currentUser = try await DatabaseHelper().getUsers().first
             products = try await Array(DatabaseHelper().getProducts().prefix(8))
             var rows: [ProductRow] = []
@@ -84,7 +80,8 @@ struct SpotifyHomeView: View {
                     title: title
                 )
                 .asButton(.press) {
-                    
+                    guard let product else { return }
+                    goToPlaylistView(product: product)
                 }
         }
         }
@@ -97,8 +94,8 @@ struct SpotifyHomeView: View {
             subheadline: product.category,
             title: product.title,
             subtitle: product.description,
-            onAddToPlaylistPressed: {self.showListSheet = true},
-            onPlayPressed: {self.showPlaySheet = true}
+            onAddToPlaylistPressed: {},
+            onPlayPressed: {goToPlaylistView(product: product)}
             )
     }
     
@@ -116,7 +113,7 @@ struct SpotifyHomeView: View {
                         ForEach(productRow.products){product in
                             ImageTitleRowCell( imageName: product.firstImage, title: product.title)
                                 .asButton(.press) {
-                                    
+                                    goToPlaylistView(product: product)
                                 }
                         }
                     }
@@ -126,6 +123,16 @@ struct SpotifyHomeView: View {
         .padding(.horizontal, 9)
     }
     
+    private func goToPlaylistView(product: Product){
+        guard let currentUser else{
+            return
+        }
+        
+        router.showScreen(.push){_ in
+            SpotifyPlaylistView(product: product, user: currentUser)
+        }
+    }
+    
     private var header: some View{
         HStack(spacing: 0){
             ZStack{
@@ -133,6 +140,9 @@ struct SpotifyHomeView: View {
                     ImageLoaderView(urlString: currentUser.image)
                         .background(Color(.spotifyWhite))
                         .clipShape(Circle())
+                        .asButton {
+                            router.dismissScreen()
+                        }
                 }
             }
             .frame(width: 35, height: 35)
@@ -156,5 +166,7 @@ struct SpotifyHomeView: View {
 }
 
 #Preview {
-    SpotifyHomeView()
+    RouterView{_ in
+        SpotifyHomeView()
+    }
 }
