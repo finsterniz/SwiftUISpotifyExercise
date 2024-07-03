@@ -55,6 +55,7 @@ struct BumbleHomeView: View {
                     .animation(.smooth(duration: 0.3), value: currentSwipeOffset)
                     .zIndex(9999)
                 }
+                .padding(4)
                 .animation(.smooth(duration: 0.3), value: cardOffsets)
             }
             .task {

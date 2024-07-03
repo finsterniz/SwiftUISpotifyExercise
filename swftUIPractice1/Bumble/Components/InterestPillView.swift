@@ -11,6 +11,7 @@ struct InterestPillView: View {
     var iconName: String? = "heart.fill"
     var emoji: String? = "😳"
     var text: String = "Graduate Degree"
+    var backgroundColor: Color? = .bumbleLightYellow
     
     var body: some View {
         HStack(spacing: 4){
@@ -27,7 +28,7 @@ struct InterestPillView: View {
         .padding(.vertical, 6)
         .padding(.horizontal, 12)
         .foregroundColor(.bumbleBlack)
-        .background(.bumbleLightYellow)
+        .background(backgroundColor)
         .cornerRadius(32)
     }
 }
