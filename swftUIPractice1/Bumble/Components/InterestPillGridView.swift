@@ -8,7 +8,7 @@
 import SwiftUI
 import SwiftfulUI
 
-struct UserInterest : Codable{
+struct UserInterest : Codable, Identifiable, Hashable{
     var id = UUID()
     var iconName : String? = nil
     var emoji: String? = nil

@@ -53,6 +53,7 @@ struct BumbleCardView: View {
                 .padding(.top, 60)
                 
                 Text("Hide and Report")
+                    .padding(.bottom, 100)
                     .asButton {
                         onHideAndReportPressed?()
                     }

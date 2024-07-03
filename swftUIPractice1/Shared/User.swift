@@ -11,7 +11,7 @@ struct UserArray: Codable {
     let total, skip, limit: Int
 }
 
-struct User: Codable, Identifiable{
+struct User: Codable, Identifiable, Hashable{
     let id: Int
     let firstName, lastName, maidenName: String
     let age: Int
@@ -41,16 +41,20 @@ struct User: Codable, Identifiable{
         UserInterest(iconName: "music.note", emoji: "🎵", text: "Music"),
         UserInterest(iconName: "leaf.fill", emoji: "🍃", text: "Nature")]}
     
-    var basics: [UserInterest] = [
-        UserInterest(iconName: "gamecontroller.fill", emoji: "🎮", text: "Gaming"),
-        UserInterest(iconName: "bicycle", emoji: "🚴‍♂️", text: "Cycling"),
-        UserInterest(iconName: "bicycle", emoji: "🚴‍♂️", text: "Cycling"),
-        UserInterest(iconName: "camera.fill", emoji: "📷", text: "Photography"),
-        UserInterest(iconName: "film.fill", emoji: "🎬", text: "Movies"),
-        UserInterest(iconName: "fork.knife", emoji: "🍽", text: "Cooking")
-    ]
+    var basics: [UserInterest]{
+        [
+            UserInterest(iconName: "gamecontroller.fill", emoji: "🎮", text: "Gaming"),
+            UserInterest(iconName: "bicycle", emoji: "🚴‍♂️", text: "Cycling"),
+            UserInterest(iconName: "bicycle", emoji: "🚴‍♂️", text: "Cycling"),
+            UserInterest(iconName: "camera.fill", emoji: "📷", text: "Photography"),
+            UserInterest(iconName: "film.fill", emoji: "🎬", text: "Movies"),
+            UserInterest(iconName: "fork.knife", emoji: "🍽", text: "Cooking")
+        ]
+    }
     
-    var images: [String] = ["https://picsum.photos/600/600", "https://picsum.photos/500/500", "https://picsum.photos/700/700"]
+    var images: [String]{
+        ["https://picsum.photos/600/600", "https://picsum.photos/500/500", "https://picsum.photos/700/700"]
+    }
     
     static var mock = User(
         id: 1,
