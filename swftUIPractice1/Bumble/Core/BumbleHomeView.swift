@@ -15,6 +15,7 @@ struct BumbleHomeView: View {
     @State private var selectedIndex: Int = 1
     @State private var cardOffsets: [Int : Bool] = [:] // UserID: (Direction is Right == TRUE)
     @State private var currentSwipeOffset: CGFloat = 0
+    @Environment (\.router) var router
     
     var body: some View {
         ZStack{
@@ -153,14 +154,14 @@ struct BumbleHomeView: View {
                     .padding(8)
                     .background(.black.opacity(0.001))
                     .asButton {
-                        
+                        router.dismissScreen()
                     }
                 
                 Image(systemName: "arrow.uturn.left")
                     .padding(8)
                     .background(.black.opacity(0.001))
                     .asButton {
-                        
+                        router.dismissScreen()
                     }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -175,7 +176,9 @@ struct BumbleHomeView: View {
                 .background(.black.opacity(0.001))
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .asButton {
-                    
+                    router.showScreen(.push) { _ in
+                        BumbleChatView()
+                    }
                 }
         }
         .fontWeight(.medium)

@@ -8,12 +8,13 @@
 import SwiftUI
 
 struct BumbleProfileImageCell: View {
+    var userImage: String = Constants.randomImage
     var percentageRemaining: Double = Double.random(in: 0...1)
     var hasMessage: Bool = true
     
     var body: some View {
         ZStack{
-            ImageLoaderView(urlString: Constants.randomImage)
+            ImageLoaderView(urlString: userImage)
                 .clipShape(Circle())
                 .padding(5)
             

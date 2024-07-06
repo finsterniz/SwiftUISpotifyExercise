@@ -12,8 +12,8 @@ import SwiftfulRouting
 struct swftUIPractice1App: App {
     var body: some Scene {
         WindowGroup {
-            RouterView{_ in
-                SpotifyHomeView()
+            RouterView{_ in 
+                ContentView()
             }
         }
     }

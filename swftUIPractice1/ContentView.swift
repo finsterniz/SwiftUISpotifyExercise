@@ -13,9 +13,17 @@ struct ContentView: View {
     @Environment (\.router) var router
     
     var body: some View {
-        Button("show spotify"){
-            router.showScreen(.fullScreenCover){_ in
-                SpotifyHomeView()
+        List{
+            Button("show spotify"){
+                router.showScreen(.fullScreenCover){_ in
+                    SpotifyHomeView()
+                }
+            }
+            
+            Button("show Bumble"){
+                router.showScreen(.fullScreenCover){_ in
+                    BumbleHomeView()
+                }
             }
         }
     }
