@@ -38,7 +38,6 @@ struct PlaylistHeaderCell: View {
                 , alignment: .bottomLeading
             )
             .asStretchyHeader(startingHeight: height)
-//            .frame(height: 300)
     }
 }
 

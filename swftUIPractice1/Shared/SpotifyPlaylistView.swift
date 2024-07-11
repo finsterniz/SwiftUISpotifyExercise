@@ -16,9 +16,6 @@ struct SpotifyPlaylistView: View {
     @State var products: [Product] = []
     @State var showHeader: Bool = true
     @Environment (\.router) var router
-
-//    @State var offset: CGFloat = 0
-//    @State var showTitle: Bool = false
     
     var body: some View {
         ZStack(){
@@ -62,9 +59,6 @@ struct SpotifyPlaylistView: View {
                     .padding(.leading, 10)
                 }
             }
-            
-//            Text("current maxY: \(offset)")
-//                .background(.red)
             
             header
                 .frame(maxHeight: .infinity, alignment: .top)
