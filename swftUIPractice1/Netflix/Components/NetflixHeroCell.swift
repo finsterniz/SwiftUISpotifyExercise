@@ -68,7 +68,7 @@ struct NetflixHeroCell: View {
         .cornerRadius(10)
         .aspectRatio(0.8, contentMode: .fit)
         .background(.black.opacity(0.001))
-        .asButton {
+        .asButton(scale: 0.985, opacity: 1, brightness: 0.3) {
             onBackgroundPressed?()
         }
     }

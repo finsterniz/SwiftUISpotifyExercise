@@ -66,7 +66,9 @@ struct NetflixMovieCell: View {
         }
 //        .background(.blue)
         .foregroundColor(.netflixWhite)
-
+        .asButton(scale: 0.985, opacity: 1){
+            
+        }
     }
 }
 
