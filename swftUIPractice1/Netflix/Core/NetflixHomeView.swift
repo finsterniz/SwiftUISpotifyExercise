@@ -45,6 +45,7 @@ struct NetflixHomeView: View {
         // 用max(10, x)可以让它不至于创建高度为负数的frame
         .opacity(scrollViewOffSet < -250 ? 0 : 1)
         .animation(.easeInOut, value: scrollViewOffSet)
+        .ignoresSafeArea()
     }
     
     private var scrollViewLayer: some View{
