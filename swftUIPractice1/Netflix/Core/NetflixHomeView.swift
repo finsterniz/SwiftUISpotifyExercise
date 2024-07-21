@@ -7,8 +7,11 @@
 
 import SwiftUI
 import SwiftfulUI
+import SwiftfulRouting
 
 struct NetflixHomeView: View {
+    
+    @Environment(\.router) var router
     
     @State private var filters = FilterModel.mockData
     @State private var selectedFilter: FilterModel? = nil
@@ -121,8 +124,10 @@ struct NetflixHomeView: View {
                                 title: product.title,
                                 isRecentlyAdded: product.isRecentlyAdded,
                                 imageName: product.firstImage,
-                                topTenRanking: rowIndex == 0 ? index + 1 : nil
+                                topTenRanking: rowIndex == 0 ? index + 1 : nil,
+                                onCellPressed: {onProductPressed(product: product)}
                             )
+                            .background(Color.black.opacity(0.001))
                         }
                     }
                     .padding(.horizontal,16)
@@ -136,13 +141,14 @@ struct NetflixHomeView: View {
             imageName: product.firstImage,
             isNetflixFilm: true,
             title: product.title,
-            categories: [product.category.capitalized, product.brand ?? ""]) {
+            categories: [product.category.capitalized, product.brand ?? ""],
+            onBackgroundPressed:{
+                onProductPressed(product: product)
+            }, onPlayPressed: {
+                onProductPressed(product: product)
+            }, onMyListPressed: {
                 
-            } onPlayPressed: {
-                
-            } onMyListPressed: {
-                
-            }
+            })
             .padding(24)
     }
     
@@ -166,12 +172,21 @@ struct NetflixHomeView: View {
         }
     }
     
+    private func onProductPressed(product: Product){
+        router.showScreen(.sheet){_ in
+            NetflixDetailView(product: product, onXMarkPressed: {})
+        }
+    }
+    
     private var header: some View{
         VStack(spacing: 0){
             HStack(spacing: 0){
                 Text("For you")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.title)
+                    .onTapGesture {
+                        router.dismissScreen()
+                    }
                 
                 HStack(spacing: 26){
                     Image(systemName: "tv.badge.wifi")
@@ -192,5 +207,7 @@ struct NetflixHomeView: View {
 }
 
 #Preview {
-    NetflixHomeView()
+    RouterView{_ in
+        NetflixHomeView()
+    }
 }

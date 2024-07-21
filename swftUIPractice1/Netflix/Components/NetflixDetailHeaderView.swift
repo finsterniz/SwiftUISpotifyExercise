@@ -18,8 +18,6 @@ struct NetflixDetailHeaderView: View {
     var body: some View {
         ZStack{
             ImageLoaderView(urlString: imageName, resizingMode: .fill)
-//                .frame(maxWidth: .infinity)
-//                .frame(height: 200)
             
             ZStack{
                 VStack{
@@ -48,12 +46,12 @@ struct NetflixDetailHeaderView: View {
                             .frame(width: 10, height: 10)
                             .background(Color.black.opacity(0.001))
                             .asButton {
-                                onAirplayPressed?()
+                                onXMarkPressed?()
                             }
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
                     .padding(.trailing, 15)
-                    .padding(.top, 10)
+                    .padding(.top, 20)
                     
                     CustomProgressBar(
                         selection: progress,

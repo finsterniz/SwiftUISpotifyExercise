@@ -15,6 +15,7 @@ struct NetflixMovieCell: View {
     
     var width: CGFloat = 90
     var height: CGFloat = 140
+    var onCellPressed: (()->Void)? = nil
     
     var body: some View {
         HStack(alignment: .bottom, spacing: -5){
@@ -67,7 +68,7 @@ struct NetflixMovieCell: View {
 //        .background(.blue)
         .foregroundColor(.netflixWhite)
         .asButton(scale: 0.985, opacity: 1){
-            
+            onCellPressed?()
         }
     }
 }
